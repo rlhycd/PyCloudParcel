@@ -5,4 +5,4 @@ install:
   - pip install -r requirements.txt
 
 script:
-  - jupyter nbconvert --ExecutePreprocessor.timeout=600 --execute ostwald1.ipynb
+  - jupyter nbconvert --ExecutePreprocessor.timeout=600 --execute Yang_et_al_2018.ipynb
