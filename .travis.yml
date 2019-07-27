@@ -2,8 +2,16 @@ language: python
 python: "3.6"
   
 install:
-  - pip install -r requirements.txt
+  - pip install -U -r requirements.txt
+  - pip install -U -r requirements-dev.txt
+  - pip install -U -r requirements-examples.txt
 
 script:
-  - mkdir pics
-  - jupyter nbconvert --ExecutePreprocessor.timeout=600 --execute poster.ipynb
+  - python -m pytest --cov-report term --cov=PyCloudParcel
+  - |
+    python -m ipykernel install --user
+    for i in examples/*.ipynb; do 
+      jupyter nbconvert --to markdown --execute --stdout $i > $i.md.travis; 
+      # TODO!
+      #diff $i.md.repo $i.md.travis
+    done;

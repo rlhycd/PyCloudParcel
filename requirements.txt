@@ -1,5 +1,3 @@
 pint
-jupyter
 scipy
 mendeleev
-matplotlib
