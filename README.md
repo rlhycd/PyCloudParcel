@@ -5,4 +5,4 @@
 [![Coverage Status](https://img.shields.io/codecov/c/github/atmos-cloud-sim-uj/PyCloudParcel/master.svg)](https://codecov.io/github/atmos-cloud-sim-uj/PyCloudParcel?branch=master)
 
 Examples:
-- Yang et al 2018 Figs 1,2: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/atmos-cloud-sim-uj/PyCloudParcel.git/master?filepath=examples%2FYang_et_al_2018_Figs_1_2.ipynb.ipynb)
+- Yang et al 2018 Figs 1,2: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/atmos-cloud-sim-uj/PyCloudParcel.git/master?filepath=examples%2FYang_et_al_2018_Figs_1_2.ipynb)
