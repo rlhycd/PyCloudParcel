@@ -69,11 +69,24 @@ class phys:
         # specific humidity deriv.
         return -4 * self.pi * np.sum(n * r**2 * dr_dt) * self.rho_w
 
-    def dr_dt(self, r, T, p, S, kp, rd):
-        return 1/r * (
+    def dr_dt_Fick(self, r, T, S, kp, rd, Td):
+        rho_v = (S+1) * self.pvs(T) / self.Rv / T
+        rho_eq = self.pvs(Td) * (1 + self.A(T)/r - self.B(kp,rd)/r**3) / self.Rv / Td
+        D = self.D(r, Td) # TODO: K(T) vs. K(Td) ???
+        return D / r / self.rho_w * (rho_v - rho_eq)
+
+    def dr_dt_MM(self, r, T, p, S, kp, rd):
+        return 1 / r * (
             S - self.A(T)/r + self.B(kp,rd)/r**3
         ) / (
-            self.Fd(T, self.D(r, T)) + self.Fk(T, self.K(r, T, p), self.lv(T))
+            self.Fd(T, self.D(r, T)) +
+            self.Fk(T, self.K(r, T, p), self.lv(T))
+        )
+
+    def dTd_dt(self, r, T, p, Td, dr_dt):
+        return 3/r/self.c_pw * (
+            self.K(r, T, p) / self.rho_w / r * (T - Td) + # TODO: K(T) vs. K(Td) ???
+            self.lv(Td) * dr_dt
         )
 
     def RH(self, T, p, q): 
