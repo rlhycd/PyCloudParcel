@@ -126,7 +126,7 @@ class minfun:
         return self.ph.mgn(drdt, self.ix.r_unit / self.ix.t_unit)
 
 
-def parcel(*, si, t, T0, p0, w, q0, kp, rd, nd, dt_max, thermo=('T','p'), micro=('r',)):
+def parcel(*, si, t, T0, p0, w, q0, kp, rd, nd, rtol=1e-3, thermo=('T','p'), micro=('r',)):
     assert len(rd) == len(nd)
     nr = len(rd)
 
@@ -167,7 +167,14 @@ def parcel(*, si, t, T0, p0, w, q0, kp, rd, nd, dt_max, thermo=('T','p'), micro=
     if hasattr(ix, 'Td'):
         y0[ix.Td] = ph.mgn(T0, ix.T_unit)
 
-    integ = ode.solve_ivp(sys, [0, ph.mgn(t, ix.t_unit)], y0, method='BDF', max_step=ph.mgn(dt_max,ix.t_unit))
+    integ = ode.solve_ivp(
+        sys,
+        [0, ph.mgn(t, ix.t_unit)],
+        y0,
+        method='BDF',
+        rtol=rtol,
+        atol=1e-6
+    )
     assert integ.success, integ.message
   
     return integ, sys
